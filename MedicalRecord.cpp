@@ -23,15 +23,19 @@ MedicalRecord::MedicalRecord(const std::string& surname, const std::string& init
 {
 }
 
+
+
 void MedicalRecord::print() const
 {
     Student::print();
-    std::cout << "Дата обращения: " << visit_datetime << "\n"
-              << "Диагноз: " << diagnosis << "\n"
-              << "Рекомендации: " << recommendations << "\n"
-              << "Врач: " << doctor_surname << " " << doctor_initials << "\n"
+    std::cout << "Visit date: " << visit_datetime << "\n"
+              << "Diagnosis: " << diagnosis << "\n"
+              << "Recommendations: " << recommendations << "\n"
+              << "Doctor: " << doctor_surname << " " << doctor_initials << "\n"
               << "----------------------------\n";
 }
+
+const std::string& MedicalRecord::getVisitDate() const { return visit_datetime; }
 
 void MedicalRecord::to_json(json& j) const
 {
@@ -43,16 +47,16 @@ void MedicalRecord::to_json(json& j) const
     j["doctor_initials"] = doctor_initials;
 }
 
-// Deserialize object from JSON
 void from_json(const json& j, MedicalRecord& r)
 {
-    // Call deserialization for base classes
     from_json(j, static_cast<Student&>(r));
-    from_json(j, static_cast<Time&>(r));
-
-    // Load specific fields
+    j.at("visit_datetime").get_to(r.visit_datetime);
     j.at("diagnosis").get_to(r.diagnosis);
     j.at("recommendations").get_to(r.recommendations);
     j.at("doctor_surname").get_to(r.doctor_surname);
     j.at("doctor_initials").get_to(r.doctor_initials);
 }
+
+const std::string& MedicalRecord::getRecommendations() const { return recommendations; }
+
+bool MedicalRecord::operator<(const MedicalRecord& other) const { return visit_datetime < other.visit_datetime; }
