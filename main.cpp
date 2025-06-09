@@ -15,18 +15,55 @@
 
 //шифрование первый приоритет
 // 
-//TODO: добавить проверку того, не загружен ли уже файл
-//TODO: добавить шифрование
+//TODO: добавить проверку того, не загружен ли уже файл check
+//TODO: добавить шифрование check
 //TODO: обернуть тестами
 //TODO: добавить шифрование, отладку проверить
 //TODO: добавить обработку исключение
-//исключения в неправильных датах, например.
+//исключения в неправильных датах, например. 
 //т.е. ожидаемый формат добавить в try,
 //все неправильное - в catch
 //может быть написать отдельную функцию парсинга дат
 //с уже зашитыми исключениями?
 // 
+// 
 // Function to display the menu
+
+bool isValidDate(int year, int month, int day)
+{
+    if(year < 1 || month < 1 || month > 12 || day < 1)
+        return false;
+
+    // Простейшая проверка количества дней в месяце
+    int daysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    // Учёт високосного года
+    if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+        daysInMonth[1] = 29;
+
+    return day <= daysInMonth[month - 1];
+}
+
+
+bool dateCheck(std::string date){
+    int year, month, day;
+    // Проверка формата строки
+    if(date.size() != 10 || date[4] != '-' || date[7] != '-') {
+        throw std::invalid_argument("Неверный формат даты. Требуется формат ГГГГ-ММ-ДД.");
+    }
+    // Извлечение частей даты
+    std::stringstream ss(date);
+    char dash;
+
+    ss >> year >> dash >> month >> dash >> day;
+
+    if(ss.fail() || !isValidDate(year, month, day)) {
+        throw std::invalid_argument("Некорректная дата.");
+    }
+
+    std::cout << "Дата успешно введена: " << date << std::endl;
+}   
+
 void showMenu()
 {
     std::cout << "\n===== Menu =====\n";
@@ -58,7 +95,7 @@ int main()
 
 
 
-
+    int year, month, day;
     MedicalRecordList list;
     int choice;
 
@@ -102,9 +139,14 @@ int main()
             std::getline(std::cin, department);
 
             //обработка неправильных дат
-            std::cout << "Visit Date and Time (format YYYY-MM-DD HH:MM): ";
+            std::cout << "Visit Date (format YYYY-MM-DD): ";
             std::getline(std::cin, visit_datetime);
-
+            try {
+                dateCheck(visit_datetime);
+            } catch(const std::exception& ex) {
+                std::cerr << "Ошибка: " << ex.what() << std::endl;
+                return 1;
+            }
             std::cout << "Diagnosis: ";
             std::getline(std::cin, diagnosis);
 
@@ -156,8 +198,12 @@ int main()
             std::string date;
             std::cout << "Enter date for searching (YYYY-MM-DD): ";
             std::getline(std::cin, date);
-
-                
+            try {
+                dateCheck(date);
+            } catch(const std::exception& ex) {
+                std::cerr << "Ошибка: " << ex.what() << std::endl;
+                return 1;
+            }
 
             std::vector<MedicalRecord> found = list.findByDate(date);
             std::cout << "\n=== Found records ===\n";
@@ -175,10 +221,20 @@ int main()
 
             std::cout << "Enter early date (YYYY-MM-DD): ";
             std::getline(std::cin, start_date);
-
+            try {
+                dateCheck(start_date);
+            } catch(const std::exception& ex) {
+                std::cerr << "Ошибка: " << ex.what() << std::endl;
+                return 1;
+            }
             std::cout << "Enter latter date (YYYY-MM-DD): ";
             std::getline(std::cin, end_date);
-
+            try {
+                dateCheck(end_date);
+            } catch(const std::exception& ex) {
+                std::cerr << "Ошибка: " << ex.what() << std::endl;
+                return 1;
+            }
             std::vector<MedicalRecord> found = list.findByDateRange(start_date, end_date);
 
             std::cout << "\n=== Found records ===\n";
@@ -196,10 +252,20 @@ int main()
             
             std::cout << "Enter early date (YYYY-MM-DD): ";
             std::getline(std::cin, start_date);
-
-            std::cout << "Entry later date (YYYY-MM-DD): ";
+            try {
+                dateCheck(start_date);
+            } catch(const std::exception& ex) {
+                std::cerr << "Ошибка: " << ex.what() << std::endl;
+                return 1;
+            }
+            std::cout << "Enter latter date (YYYY-MM-DD): ";
             std::getline(std::cin, end_date);
-
+            try {
+                dateCheck(end_date);
+            } catch(const std::exception& ex) {
+                std::cerr << "Ошибка: " << ex.what() << std::endl;
+                return 1;
+            }
             int total = list.countStudentsWithRest(start_date, end_date);
             std::cout << "Amount of students, who received exempt from classes from " << start_date << " to " << end_date << ": "
                       << total << "\n";
