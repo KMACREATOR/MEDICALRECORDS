@@ -2,7 +2,7 @@
 #define MEDICALRECORD_H
 
 #include "Student.h"
-#include "Time.h"
+//#include "Time.h"
 
 class MedicalRecord : public Student
 {
@@ -18,11 +18,18 @@ public:
                   int enrollment_year, const std::string& institute, const std::string& department,
                   const std::string& visit_datetime, const std::string& diagnosis, const std::string& recommendations,
                   const std::string& doctor_surname, const std::string& doctor_initials);
+    MedicalRecord()
+        : MedicalRecord("", "", 0, "", 0, "", "", "", "", "", "", "")
+    {
+    }
 
     void print() const override;
     void to_json(json& j) const override;
-
+    const std::string& getVisitDate() const;   
     friend void from_json(const json& j, MedicalRecord& r);
+    bool operator<(const MedicalRecord& other) const;
+    const std::string& getRecommendations() const;
+    const std::string& getDiagnosis() const;
 };
 
 #endif // MEDICALRECORD_H

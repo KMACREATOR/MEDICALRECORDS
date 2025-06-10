@@ -19,13 +19,13 @@ Student::Student(const std::string& surname, const std::string& initials, int bi
 
 void Student::print() const
 {
-    std::cout << "Фамилия: " << surname << "\n"
-              << "Инициалы: " << initials << "\n"
-              << "Год рождения: " << birth_year << "\n"
-              << "Телефон: " << phone << "\n"
-              << "Год поступления: " << enrollment_year << "\n"
-              << "Институт: " << institute << "\n"
-              << "Кафедра: " << department << "\n";
+    std::cout << "Surname: " << surname << "\n"
+              << "Initials: " << initials << "\n"
+              << "Birthdate: " << birth_year << "\n"
+              << "Telephone number: " << phone << "\n"
+              << "Enrollment year: " << enrollment_year << "\n"
+              << "Institute: " << institute << "\n"
+              << "Department: " << department << "\n";
 }
 
 void Student::to_json(json& j) const

@@ -127,13 +127,14 @@
     <ClCompile Include="MedicalRecord.cpp" />
     <ClCompile Include="MedicalRecordList.cpp" />
     <ClCompile Include="Student.cpp" />
-    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MedicalRecord.h" />
     <ClInclude Include="MedicalRecordList.h" />
     <ClInclude Include="Student.h" />
-    <ClInclude Include="Time.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

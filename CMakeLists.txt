@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.30)
+project(MEDICALRECORDS VERSION 1.0 LANGUAGES CXX)
+get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_library(print STATIC \${CMAKE_CURRENT_SOURCE_DIR}/sources/print.cpp)
+include_directories(\${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(example1 print)
+target_link_libraries(example2 print)
