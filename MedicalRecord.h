@@ -2,7 +2,7 @@
 #define MEDICALRECORD_H
 
 #include "Student.h"
-#include "Time.h"
+//#include "Time.h"
 
 class MedicalRecord : public Student
 {
@@ -29,6 +29,7 @@ public:
     friend void from_json(const json& j, MedicalRecord& r);
     bool operator<(const MedicalRecord& other) const;
     const std::string& getRecommendations() const;
+    const std::string& getDiagnosis() const;
 };
 
 #endif // MEDICALRECORD_H

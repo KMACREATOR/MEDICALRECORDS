@@ -1,7 +1,7 @@
 #include "MedicalRecord.h"
 
 #include "Student.h"
-#include "Time.h"
+//#include "Time.h"
 
 #include <iostream>
 
@@ -60,3 +60,6 @@ void from_json(const json& j, MedicalRecord& r)
 const std::string& MedicalRecord::getRecommendations() const { return recommendations; }
 
 bool MedicalRecord::operator<(const MedicalRecord& other) const { return visit_datetime < other.visit_datetime; }
+
+
+const std::string& MedicalRecord::getDiagnosis() const { return diagnosis; }

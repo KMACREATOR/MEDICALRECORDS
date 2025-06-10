@@ -273,3 +273,20 @@ void MedicalRecordList::loadFromFileEncrypted(const std::string& filename, const
         std::cerr << "Ошибка парсинга JSON!\n";
     }
 }   
+
+std::vector<MedicalRecord> MedicalRecordList::findByDateRangeAndDiagnosis(const std::string& start_date,
+                                                                          const std::string& end_date,
+                                                                          const std::string& diagnosis) const
+{
+    std::vector<MedicalRecord> result;
+
+    for(const auto& record : records) {
+        if(record.getVisitDate() >= start_date && record.getVisitDate() <= end_date &&
+           record.getDiagnosis() == diagnosis) {
+            result.push_back(record);
+        }
+    }
+
+    return result;
+
+}

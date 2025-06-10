@@ -12,6 +12,8 @@ private:
     static std::string decrypt(const std::string& cipher, const std::string& password);
 
 public:
+    std::vector<MedicalRecord> findByDateRangeAndDiagnosis(const std::string& start_date, const std::string& end_date,
+                                                           const std::string& diagnosis) const;
     void saveToFileEncrypted(const std::string& filename, const std::string& password);
     void loadFromFileEncrypted(const std::string& filename, const std::string& password);
     std::vector<MedicalRecord> findByDate(const std::string& date) const;

@@ -61,7 +61,7 @@ bool dateCheck(std::string date){
         throw std::invalid_argument("Некорректная дата.");
     }
 
-    std::cout << "Дата успешно введена: " << date << std::endl;
+    std::cout << "date checked, passing. . ." << date << std::endl;
 }   
 
 void showMenu()
@@ -73,7 +73,7 @@ void showMenu()
     std::cout << "4. Save Database to File\n";
     std::cout << "5. Load Database from File\n";
     std::cout << "6. Find by date\n";
-    std::cout << "7. Find by date-range\n";
+    std::cout << "7. Find by date-range and diagnosis\n";
     std::cout << "8. Count exemped students in a data-range\n";
     std::cout << "9. Save and encrypt\n";
     std::cout << "10. Load and decrypt\n";
@@ -217,7 +217,7 @@ int main()
             break;
         }
         case 7: {
-            std::string start_date, end_date;
+            std::string start_date, end_date, diag;
 
             std::cout << "Enter early date (YYYY-MM-DD): ";
             std::getline(std::cin, start_date);
@@ -235,7 +235,11 @@ int main()
                 std::cerr << "Ошибка: " << ex.what() << std::endl;
                 return 1;
             }
-            std::vector<MedicalRecord> found = list.findByDateRange(start_date, end_date);
+
+            std::cout << "Enter diagnosis for the search: ";
+            std::getline(std::cin, diag);
+
+            std::vector<MedicalRecord> found = list.findByDateRangeAndDiagnosis(start_date, end_date, diag);
 
             std::cout << "\n=== Found records ===\n";
             if(found.empty()) {
